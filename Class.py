@@ -1,40 +1,44 @@
+import random
+
 class ClassLevels (object):
     def __init__(self):
         pass
-    def getLevel(self):
+    def get_level(self):
         return self.Level
-    def setLevel(self,Level):
+    def set_level(self,Level):
         self.Level= Level
-    def levelUp(self):
+    def level_up(self,character,con_mod):
         self.Level = self.Level+1
-    def getHitDie(self):
+        character.add_hitpoints(random.randint(1,self.get_hit_die())+con_mod)
+        character.level_up()
+    def get_hit_die(self):
         return self.HitDie
-    def getSkillPoints(self,IntMod):
+    def get_skill_points(self,IntMod):
         return self.Level*(self.SkillPoints+IntMod)
-    def hasSimpleWeaponProficiency(self):
+    def has_simple_weapon_proficiency(self):
         return self.SimpleWeaponProficiency
-    def hasMartialWeaponProficiency(self):
+    def has_martial_weapon_proficiency(self):
         return self.MartialWeaponProficiency
-    def hasLightArmorProficiency(self):
+    def has_light_armor_proficiency(self):
         return self.LightArmorProficiency
-    def hasMediumArmorProficiency(self):
+    def has_medium_armor_proficiency(self):
         return self.MediumArmorProficiency
-    def hasHeavyArmorProficiency(self):
+    def has_heavy_armor_proficiency(self):
         return self.HeavyArmorProficiency
-    def hasShieldProficiency(self):
+    def has_shield_proficiency(self):
         return self.ShieldProficiency
-    def getBAB(self):
-        return self.BAB[self.getLevel()]
-    def getFortSave(self):
-        return self.FortSave[self.getLevel()]
-    def getRefSave(self):
-        return self.RefSave[self.getLevel()]
-    def getWillSave(self):
-        return self.WillSave[self.getLevel()]
-    def getClassSkills(self):
+    def get_bab(self):
+        return self.BAB[self.get_level()]
+    def get_fort_save(self):
+        return self.FortSave[self.get_level()]
+    def get_ref_save(self):
+        return self.RefSave[self.get_level()]
+    def get_will_save(self):
+        return self.WillSave[self.get_level()]
+    def get_class_skills(self):
         return self.ClassSkills
 
-def chooseClass():
+def choose_class():
     classchoice = 99
     while classchoice>1:
         try:

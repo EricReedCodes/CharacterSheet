@@ -1,4 +1,4 @@
-def loadSkillMatrix():
+def load_skill_matrix():
     Matrix = [[0 for x in range(7)] for x in range(36)]
 
     Matrix[0][0] = 'Skill'
@@ -8,7 +8,6 @@ def loadSkillMatrix():
     Matrix[0][4] = 'Class/XC'
     Matrix[0][5] = 'Ranks'
     Matrix[0][6] = 'Misc Mod'
-
 
     Matrix[1][0] = 'Acrobatics'
     Matrix[2][0] = 'Appraise'
@@ -83,20 +82,21 @@ def loadSkillMatrix():
     Matrix[35][2] = 'Cha'
     return Matrix
 
-def allocateSkillPoints(Matrix,SkillPoints):
-    for x in range(0,36):
-        print(Matrix[x])
-    print("It's now time to allocate skill points.  First choose a skill and then choose how many points to allocate")
-    print("You have",SkillPoints,"skill points to allocate.")
+def allocate_skill_points(Matrix,SkillPoints):
+#    for x in range(0,36):
+#        print(Matrix[x])
+    display_skills(Matrix)
+    print("Could have fooled me, you don't look like you have any skills, but you have",SkillPoints,"to allocate.")
+    print("First choose a skill and then choose how many points to allocate.")
     while SkillPoints > 0:
         ValidSkillChoice = False
         while ValidSkillChoice == False:
-            Skill = input("Enter the name of the skill without apostrophes.")
+            Skill = input("Enter the name of the skill (case-sensitive) without apostrophes.")
             #Skill = Skill.capitalize() - This lower cases subsequent words in skills with multiple words which caused failure.
             if [(index, row.index(Skill)) for index, row in enumerate(Matrix) if Skill in row] != []: #I don't understand exactly what this line means and am certain it could be more efficient
                 ValidSkillChoice = True
             else:
-                print("Sorry, that's not a valid option.")
+                print("Try not to be stupid, that's not a valid option.")
         Ranks = int(input("Enter the number of skill points you wish to allocate to that skill."))
         if Ranks > SkillPoints:
             print("Sorry, you don't have that many skill points remaining.")
@@ -107,7 +107,7 @@ def allocateSkillPoints(Matrix,SkillPoints):
             SkillPoints = SkillPoints - Ranks
     return Matrix
 
-def setClassSkills(Matrix,ClassSkills):
+def set_class_skills(Matrix,ClassSkills):
     for x in range(1,36):
         if ClassSkills[x-1] == 'Class':
             Matrix[x][4] = 'Class'
@@ -116,7 +116,7 @@ def setClassSkills(Matrix,ClassSkills):
             Matrix[y][4] = 'XC'
     return Matrix
 
-def CalculateSkillTotals(Matrix):
+def calculate_skill_totals(Matrix):
     for x in range(1,36):
         if Matrix[x][4] == 'Class' and Matrix[x][5]>=1:
             Matrix[x][1] = Matrix[x][3]+Matrix[x][5]+Matrix[x][6]+3
@@ -124,7 +124,7 @@ def CalculateSkillTotals(Matrix):
             Matrix[x][1] = Matrix[x][3]+Matrix[x][5]+Matrix[x][6]
     return Matrix
 
-def addStatMods(Matrix,StrMod,DexMod,ConMod,IntMod,WisMod,ChaMod):
+def add_stat_mods(Matrix,StrMod,DexMod,ConMod,IntMod,WisMod,ChaMod):
     for x in range(0,36):
         if Matrix[x][2] == 'Str':
             Matrix[x][3] = StrMod
@@ -140,6 +140,14 @@ def addStatMods(Matrix,StrMod,DexMod,ConMod,IntMod,WisMod,ChaMod):
             Matrix[x][3] = ChaMod
     return Matrix
 
-def displaySkills(Matrix):
+def display_skills(Matrix):
     for x in range(0,36):
         print(Matrix[x])
+
+def get_skill_points_used(Matrix):
+    #This method will be used when a character levels so that their total skill points - used = pts to allocate.
+    #It could also be relevant if a character's IntMod changes.
+    SkillPointsUsed = 0
+    for x in range(1,36):
+        SkillPointsUsed = SkillPointsUsed + Matrix[x][5]
+    return SkillPointsUsed

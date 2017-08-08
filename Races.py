@@ -1,6 +1,8 @@
+
 class Race(object):
     def __init__(self):
         pass
+#I started off putting all this stuff in __init__ but I don't think it's necessary here.
      #(self, strRacial, dexRacial, conRacial, wisRacial, intRacial, chaRacial, size, type, subtype, baseSpeed, bonusFeat, lowLightVision, darkVision):
      #   self.strRacial = strRacial
      #   self.dexRacial = dexRacial
@@ -15,37 +17,37 @@ class Race(object):
      #   self.bonusFeat = bonusFeat
      #   self.lowLightVision = lowLightVision
      #   self.darkVision = darkVision
-    def getStrRacial(self):
+    def get_str_racial(self):
         return self.strRacial
-    def getDexRacial(self):
+    def get_dex_racial(self):
         return self.dexRacial
-    def getConRacial(self):
+    def get_con_racial(self):
         return self.conRacial
-    def getWisRacial(self):
+    def get_wis_racial(self):
         return self.wisRacial
-    def getIntRacial(self):
+    def get_int_racial(self):
         return self.intRacial
-    def getChaRacial(self):
+    def get_cha_racial(self):
         return self.chaRacial
-    def getRaceName(self):
+    def get_race_name(self):
         return self.raceName
-    def getSize(self):
+    def get_size(self):
         return self.size
-    def getType(self):
+    def get_type(self):
         return self.type
-    def getSubtype(self):
+    def get_subtype(self):
         return self.subtype
-    def getBaseSpeed(self):
+    def get_base_speed(self):
         return self.baseSpeed
-    def getBonusFeat(self):
-        return self.bonusFeat
-    def getLowLightVision(self):
+#    def get_bonus_feat(self):
+#        return self.bonusFeat
+    def get_low_light_vision(self):
         return self.lowLightVision
-    def getDarkVision(self):
+    def get_dark_vision(self):
         return self.darkVision
 #class dwarf(Race):
  #   def __init__(self, strRacial, dexRacial, conRacial, wisRacial, intRacial, chaRacial, size, type, subtype, baseSpeed, bonusFeat, lowLightVision, darkVision):
-    def setRaceToDwarf(self):
+    def set_race_to_dwarf(self):
         self.raceName = "Dwarf"
         self.strRacial = 0
         self.dexRacial = 0
@@ -60,7 +62,7 @@ class Race(object):
         self.bonusFeat = 0
         self.lowLightVision = 0
         self.darkVision = 60
-    def setRaceToHalfling(self):
+    def set_race_to_halfling(self):
         self.raceName = "Halfling"
         self.strRacial = -2
         self.dexRacial = 2
@@ -75,7 +77,7 @@ class Race(object):
         self.bonusFeat = 0
         self.lowLightVision = 0
         self.darkVision = 60
-    def setRaceToHuman(self):
+    def set_race_to_human(self, character):
         self.raceName = "Human"
         self.strRacial = 0
         self.dexRacial = 0
@@ -87,11 +89,12 @@ class Race(object):
         self.type = "Humanoid"
         self.subtype = "Human"
         self.baseSpeed = 30
-        self.bonusFeat = 1
+ #       self.bonusFeat = 1
+        character.add_feat()
         self.lowLightVision = 0
         self.darkVision = 0
-        self.chooseBonus()
-    def setRaceToHalfOrc(self):
+        self.choose_bonus()
+    def set_race_to_halforc(self):
         self.raceName="Half-Orc"
         self.strRacial = 0
         self.dexRacial = 0
@@ -106,9 +109,9 @@ class Race(object):
         self.bonusFeat = 0
         self.lowLightVision = 0
         self.darkVision = 60
-        self.chooseBonus()
+        self.choose_bonus()
 
-    def chooseBonus(self): #This is for races like humans, half-orcs, and half-elves to choose a stat for their +2 bonus.
+    def choose_bonus(self): #This is for races like humans, half-orcs, and half-elves to choose a stat for their +2 bonus.
         statbonus = 99
         while statbonus >6:
             try:
@@ -130,14 +133,14 @@ class Race(object):
             except ValueError:
                 print("Please enter a number from 1-6.")
 
-def chooseRace():
+def choose_race(character):
     r = Race()
     racechoice = 99 #99 is an arbitrary number that is an invalid option below in order to begin the while loop.
     while racechoice >7:
         try:
             racechoice = int(input("Please choose a race:  (1) Dwarf, (2) Elf, (3) Gnome, (4) Half-Elf, (5) Half-Orc, (6) Halfling, (7) Human"))
             if racechoice==1:
-                r.setRaceToDwarf()
+                r.set_race_to_dwarf()
             elif racechoice==2: #Elf
                 print("coming soon")
                 racechoice=99
@@ -148,11 +151,11 @@ def chooseRace():
                 print("coming soon")
                 racechoice=99
             elif racechoice==5: #Half-Orc
-                r.setRaceToHalfOrc()
+                r.set_race_to_halforc()
             elif racechoice==6:
-                r.setRaceToHalfling()
+                r.set_race_to_halfling()
             elif racechoice==7:
-                r.setRaceToHuman()
+                r.set_race_to_human(character)
             else:
                 print("Please choose a valid option.")
         except ValueError:
