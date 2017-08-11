@@ -4,21 +4,36 @@ import math
 #do I really want to have stats track all the different mods and initial rolls or should each stat just be a single number?
 #in Excel it's been really nice to see how each stat (and every other numerical attribute a character has) adds up, but it seems like a pain in the ass here.
 class Stat(object):
-    def __init__(self, statRoll, racialMod, statTotal, statMod):
+    def __init__(self, stat_roll, racial_mod, level_bonus, enhancement, stat_total, stat_mod):
         self.self = self
-        self.statRoll = statRoll
-        self.racialMod = racialMod
-        self.statTotal = statTotal
-        self.statMod = statMod
-    def set_racial_mod(self, RacialMod):
-        self.racialMod = RacialMod
+        self.stat_roll = stat_roll
+        self.racial_mod = racial_mod
+        self.stat_total = stat_total
+        self.stat_mod = stat_mod
+        self.level_bonus = level_bonus
+        self.enhancement = enhancement
+    def set_racial_mod(self, racial_mod):
+        self.racial_mod = racial_mod
+        self.calculate_stat()
+    def add_level_bonus(self):
+        self.level_bonus += 1
+        self.calculate_stat()
+    def set_enhancement(self, enhancement):
+        self.enhancement = enhancement
+        self.calculate_stat()
     def calculate_stat(self):
-        self.statTotal = self.statRoll + self.racialMod
-        self.statMod = math.floor((self.statTotal - 10) / 2)
+        self.stat_total = self.stat_roll + self.racial_mod + self.level_bonus + self.enhancement
+        self.stat_mod = math.floor((self.stat_total - 10) / 2)
+    def get_racial_mod(self):
+        return self.racial_mod
+    def get_level_bonus(self):
+        return self.level_bonus
+    def get_enhancement(self):
+        return self.enhancement
     def get_stat_total(self):
-        return self.statTotal
+        return self.stat_total
     def get_stat_mod(self):
-        return self.statMod
+        return self.stat_mod
 
 def roll_stats(name):
 #rolls a set of 7 stats, dropping the lowest.  Each stat is rolled as 4d6 dropping the lowest but adding ones.
@@ -80,5 +95,3 @@ def display_stats(Str, StrMod, Dex, DexMod, Con, ConMod, Int, IntMod, Wis, WisMo
     else:
         print("Cha: ", Cha, "  ",ChaMod)
 
-def add_stat_bonus(Stat): #will need something like this for fourth level bonuses but not sure how best to implement it.
-    Stat+=1

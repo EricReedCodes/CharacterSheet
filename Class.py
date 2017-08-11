@@ -4,17 +4,20 @@ class ClassLevels (object):
     def __init__(self):
         pass
     def get_level(self):
-        return self.Level
-    def set_level(self,Level):
-        self.Level= Level
-    def level_up(self,character,con_mod):
-        self.Level = self.Level+1
-        character.add_hitpoints(random.randint(1,self.get_hit_die())+con_mod)
+        return self.level
+    def set_level(self,level):
+        self.level= level
+    def level_up(self,character):
+        self.level = self.level+1
+        if self.level==1:
+            character.add_hitpoints(self.get_hit_die() + character.get_con().get_stat_mod())
+        else:
+            character.add_hitpoints(random.randint(1,self.get_hit_die())+character.get_con().get_stat_mod())
         character.level_up()
     def get_hit_die(self):
         return self.HitDie
     def get_skill_points(self,IntMod):
-        return self.Level*(self.SkillPoints+IntMod)
+        return self.level*(self.SkillPoints+IntMod)
     def has_simple_weapon_proficiency(self):
         return self.SimpleWeaponProficiency
     def has_martial_weapon_proficiency(self):
